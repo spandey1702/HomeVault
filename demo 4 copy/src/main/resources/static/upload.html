@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Document - HomeVault</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Upload Document</h2>
+        <form id="uploadForm" enctype="multipart/form-data">
+            <label for="file">Select File:</label>
+            <input type="file" id="file" name="file" required>
+            
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            
+            <button type="submit">Upload</button>
+            <p id="message"></p>
+        </form>
+        <button id="backButton" class="btn">Back</button>
+    </div>
+    <script src="js/upload.js"></script>
+</body>
+</html>
