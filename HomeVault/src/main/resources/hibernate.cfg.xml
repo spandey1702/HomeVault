@@ -16,7 +16,7 @@
 
         <mapping class="com.mycompany.homevault.model.User"/>
         <mapping class="com.mycompany.homevault.model.Item"/>
-        <mapping class="com.mycompany.homevault.mode.Document"/>
+        <mapping class="com.mycompany.homevault.model.Document"/>
         
     </session-factory>
 </hibernate-configuration>

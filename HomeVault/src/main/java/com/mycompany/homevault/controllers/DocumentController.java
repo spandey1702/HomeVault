@@ -10,7 +10,8 @@ import com.mycompany.homevault.model.User;
 import com.mycompany.homevault.repo.DocumentRepository;
 import com.mycompany.homevault.repo.UserRepository;
 
-import jakarta.servlet.http.HttpSession;
+import javax.persistence.PersistenceContext;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -22,7 +23,7 @@ import java.util.List;
 @RequestMapping("/api/documents")
 public class DocumentController {
 
-    @Autowired
+    @PersistenceContext
     private DocumentRepository documentRepository;
 
     @Autowired

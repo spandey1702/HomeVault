@@ -1,9 +1,9 @@
 package com.mycompany.homevault.repo;
 
 import com.mycompany.homevault.model.Item;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.Transactional;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -37,5 +37,10 @@ public class ItemRepository {
         return entityManager.createQuery("SELECT i FROM Item i WHERE i.username = :username", Item.class)
                             .setParameter("username", username)
                             .getResultList();
+    }
+
+    public List<Item> findExpiringItemsForUser(String username) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findExpiringItemsForUser'");
     }
 }

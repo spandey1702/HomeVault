@@ -2,7 +2,7 @@ package com.mycompany.homevault.controllers;
 
 import com.mycompany.homevault.model.Item;
 import com.mycompany.homevault.repo.ItemRepository;
-import jakarta.servlet.http.HttpSession;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
