@@ -1,7 +1,7 @@
 package com.mycompany.homevault.repo;
 import java.util.List;
 
-//import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -11,7 +11,8 @@ import com.mycompany.homevault.model.Document;
 @Repository
 public class DocumentRepository {
 
-    @PersistenceContext
+    
+    @Autowired
     private EntityManager entityManager;
 
     public List<Document> findAllDocuments() {
