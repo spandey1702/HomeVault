@@ -21,17 +21,33 @@ api.interceptors.request.use(
     }
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => {
+    console.error('Request interceptor error:', error);
+    return Promise.reject(error);
+  }
 );
 
 // Response interceptor for error handling
 api.interceptors.response.use(
   (response) => response,
   (error) => {
+    console.error('API Error:', error.response?.data || error.message);
+    
     if (error.response?.status === 401) {
-      localStorage.removeItem('auth_token');
-      window.location.href = '/login';
+      // Only redirect if we're not already on auth pages
+      const currentPath = window.location.pathname;
+      if (!currentPath.includes('/login') && !currentPath.includes('/register')) {
+        localStorage.removeItem('auth_token');
+        window.location.href = '/login';
+      }
+    } else if (error.response?.status === 403) {
+      console.error('Access forbidden');
+    } else if (error.response?.status >= 500) {
+      console.error('Server error');
+    } else if (error.code === 'NETWORK_ERROR' || !error.response) {
+      console.error('Network error - server may be down');
     }
+    
     return Promise.reject(error);
   }
 );
