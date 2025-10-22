@@ -1,0 +1,21 @@
+# Packer files
+*.log
+manifest.json
+database-manifest.json
+crash.log
+
+# Packer cache
+packer_cache/
+
+# Build artifacts
+*.box
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo

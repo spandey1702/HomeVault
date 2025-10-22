@@ -1,0 +1,16 @@
+# Copy this file to terraform.tfvars and update with your values
+
+aws_region = "us-east-1"
+project_name = "homevault"
+
+# Database Configuration
+db_instance_class = "db.t3.micro"
+db_name = "homevault"
+db_username = "postgres"
+db_password = "your-secure-password-here"  # Change this!
+
+# Application Secret
+session_secret = "your-session-secret-here"  # Change this!
+
+# Optional: If you have a domain
+# domain_name = "example.com"

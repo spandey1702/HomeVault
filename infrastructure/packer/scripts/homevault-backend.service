@@ -1,0 +1,28 @@
+[Unit]
+Description=HomeVault Backend Service
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/opt/homevault
+
+# Environment variables (can be overridden by EC2 user data)
+EnvironmentFile=-/etc/homevault/environment
+
+ExecStart=/opt/homevault/start-backend.sh
+ExecStop=/usr/bin/docker stop homevault-backend
+ExecStopPost=/usr/bin/docker rm homevault-backend
+
+Restart=on-failure
+RestartSec=10
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
