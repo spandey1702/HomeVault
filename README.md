@@ -1,6 +1,6 @@
 HomeVault is a production-ready inventory management system designed to help households track items, manage expiration dates, and share inventory across family members. Built with modern cloud-native architecture, it demonstrates enterprise-level software engineering practices including microservices, infrastructure as code, and CI/CD automation.
 
-Key Features
+Key Features:
 Smart Inventory Tracking
     Add, edit, and categorize household items
     Track purchase dates, expiration dates, and quantities
