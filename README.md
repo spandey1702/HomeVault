@@ -1,63 +1,85 @@
-# HomeVault
-🏠 HomeVault
+HomeVault is a production-ready inventory management system designed to help households track items, manage expiration dates, and share inventory across family members. Built with modern cloud-native architecture, it demonstrates enterprise-level software engineering practices including microservices, infrastructure as code, and CI/CD automation.Key Features✅ Smart Inventory Tracking
 
-Smart Inventory Management System
-Never lose track of your belongings again. Organize, track, and manage your home inventory with ease.
-🎯 Core Functionality
+Add, edit, and categorize household items
+Track purchase dates, expiration dates, and quantities
+Organize by location and category
+- Expiration Management
 
-Smart Item Management - Add, edit, and organize your belongings with detailed information
-Expiry Tracking - Get notified before items expire with intelligent alerts
-Category Organization - Organize items by categories and locations
-Search & Filter - Quickly find what you're looking for
-Visual Dashboard - See your inventory at a glance with statistics and insights
+Automatic expiration date monitoring
+Visual indicators for expiring items (7-day warning)
+Expired item notifications
 
-🔐 Security & Authentication
+- Multi-User Support
+    Household-based sharing
+    Role-based access control (planned)
+    Individual and shared inventories
+- Cloud-Native Architecture
+    Containerized microservices on AWS ECS
+    Auto-scaling based on demand
+    High availability across multiple AZs
+-  Modern Tech Stack
+    Reactive frontend with React 19
+    RESTful API with Spring Boot 3.2
+    PostgreSQL database with automated backups
+Architecture
+System Architecture
+┌─────────────────────────────────────────────────────────────┐
+│                         Internet                            
+└─────────────────────┬───────────────────────────────────────┘
+                      │
+                      ▼
+         ┌────────────────────────┐
+         │   Route 53 (DNS)       │
+         │   CloudFront (CDN)     │
+         └────────────┬───────────┘
+                      │
+                      ▼
+         ┌────────────────────────┐
+         │  Application Load      │
+         │  Balancer (ALB)        │
+         └────────────┬───────────┘
+                      │
+        ┌─────────────┴─────────────┐
+        │                           │
+        ▼                           ▼
+┌───────────────┐          ┌───────────────┐
+│   ECS Fargate │          │   ECS Fargate │
+│   Container 1 │          │   Container 2 │
+│               │          │               │
+│  Spring Boot  │          │  Spring Boot  │
+│   Backend     │          │   Backend     │
+└───────┬───────┘          └───────┬───────┘
+        │                           │
+        └─────────────┬─────────────┘
+                      │
+                      ▼
+         ┌────────────────────────┐
+         │   RDS PostgreSQL       │
+         │   Multi-AZ Deployment  │
+         └────────────────────────┘
+  
+Technology Stack-- 
+  Framework: React 19.1 with TypeScript
+  Framework: Spring Boot 3.2.0
+  Language: Java 17
+  Database: PostgreSQL 15
+  ORM: Hibernate/JPA
+  Security: Spring Security with JWT
+  API: RESTful with JSON
+  Build Tool: Maven
 
-Secure Login System - Password encryption with BCrypt
-Session Management - Secure token-based authentication
-User Profiles - Personal inventory spaces
-
-📱 Modern UI/UX
-
-Responsive Design - Works seamlessly on desktop, tablet, and mobile
-Material Design - Clean, intuitive interface using Material-UI
-Real-time Notifications - Instant feedback for all actions
-Loading States - Smooth user experience with proper loading indicators
-
-🚀 Advanced Features
-
-Expiry Alerts - Dashboard widget showing items expiring soon
-Bulk Operations - Efficiently manage multiple items
-Data Validation - Comprehensive form validation and error handling
-Export/Import - Backup and restore your inventory data
-
-🛠️ Tech Stack
-Backend
-
-Java 17 - Modern Java features and performance
-Spring Boot 3.2.0 - Enterprise-grade framework
-Spring Security - Authentication and authorization
-Spring Data JPA - Database abstraction layer
-Maven - Dependency management
-
-Frontend
-
-React 18 - Modern UI library with hooks
-TypeScript - Type-safe development
-Material-UI - Google's Material Design components
-Axios - HTTP client for API communication
-React Router - Client-side routing
-
-Development Tools
-
-Spring Boot DevTools - Hot reload for backend
-Create React App - Optimized development setup
-ESLint & Prettier - Code quality and formatting
-
-🚀 Quick Start
-Prerequisites
-
-Java 17+ installed
-Node.js 16+ and npm
-PostgreSQL database
-Git for version control
+Infrastructure
+  Cloud Provider: AWS
+  Database: RDS PostgreSQL
+  Load Balancer: Application Load Balancer
+  IaC: Terraform + Packer
+  Networking: VPC with public/private subnets
+  Storage: S3 
+DevOps & Monitoring
+  CI/CD: GitHub Actions
+  Logging: CloudWatch Logs
+  Monitoring: CloudWatch Metrics + Dashboards
+  Alerting: SNS + CloudWatch Alarms
+  Image Building: Packer for custom AMIs
+  Secrets: AWS Secrets Managerabase
+  Git for version control
