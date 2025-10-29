@@ -1,28 +1,27 @@
-HomeVault is a production-ready inventory management system designed to help households track items, manage expiration dates, and share inventory across family members. Built with modern cloud-native architecture, it demonstrates enterprise-level software engineering practices including microservices, infrastructure as code, and CI/CD automation.Key Features✅ Smart Inventory Tracking
+HomeVault is a production-ready inventory management system designed to help households track items, manage expiration dates, and share inventory across family members. Built with modern cloud-native architecture, it demonstrates enterprise-level software engineering practices including microservices, infrastructure as code, and CI/CD automation.
 
-Add, edit, and categorize household items
-Track purchase dates, expiration dates, and quantities
-Organize by location and category
-- Expiration Management
-
-Automatic expiration date monitoring
-Visual indicators for expiring items (7-day warning)
-Expired item notifications
-
-- Multi-User Support
+Key Features
+Smart Inventory Tracking
+    Add, edit, and categorize household items
+    Track purchase dates, expiration dates, and quantities
+    Organize by location and category
+Expiration Management
+    Automatic expiration date monitoring
+    Visual indicators for expiring items (7-day warning)
+    Expired item notifications
+Multi-User Support
     Household-based sharing
     Role-based access control (planned)
     Individual and shared inventories
-- Cloud-Native Architecture
+Cloud-Native Architecture
     Containerized microservices on AWS ECS
     Auto-scaling based on demand
     High availability across multiple AZs
--  Modern Tech Stack
+Modern Tech Stack
     Reactive frontend with React 19
     RESTful API with Spring Boot 3.2
     PostgreSQL database with automated backups
 
-  
 Technology Stack-- 
   Framework: React 19.1 with TypeScript
   Framework: Spring Boot 3.2.0
