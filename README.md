@@ -21,42 +21,7 @@ Expired item notifications
     Reactive frontend with React 19
     RESTful API with Spring Boot 3.2
     PostgreSQL database with automated backups
-Architecture
-System Architecture
-┌─────────────────────────────────────────────────────────────┐
-│                         Internet                            
-└─────────────────────┬───────────────────────────────────────┘
-                      │
-                      ▼
-         ┌────────────────────────┐
-         │   Route 53 (DNS)       │
-         │   CloudFront (CDN)     │
-         └────────────┬───────────┘
-                      │
-                      ▼
-         ┌────────────────────────┐
-         │  Application Load      │
-         │  Balancer (ALB)        │
-         └────────────┬───────────┘
-                      │
-        ┌─────────────┴─────────────┐
-        │                           │
-        ▼                           ▼
-┌───────────────┐          ┌───────────────┐
-│   ECS Fargate │          │   ECS Fargate │
-│   Container 1 │          │   Container 2 │
-│               │          │               │
-│  Spring Boot  │          │  Spring Boot  │
-│   Backend     │          │   Backend     │
-└───────┬───────┘          └───────┬───────┘
-        │                           │
-        └─────────────┬─────────────┘
-                      │
-                      ▼
-         ┌────────────────────────┐
-         │   RDS PostgreSQL       │
-         │   Multi-AZ Deployment  │
-         └────────────────────────┘
+
   
 Technology Stack-- 
   Framework: React 19.1 with TypeScript
