@@ -131,11 +131,19 @@ build {
     ]
   }
 
-  # Install monitoring tools
+  # Install monitoring + mail-testing tools
   provisioner "shell" {
     inline = [
-      "echo 'Installing monitoring tools...'",
-      "sudo apt-get install -y htop netcat-openbsd curl wget jq"
+      "echo 'Installing monitoring and utilities...'",
+      "sudo apt-get install -y htop netcat-openbsd curl wget jq mailutils"
+    ]
+  }
+
+  # Verify SES SMTP connectivity (smoke test — does not send real mail)
+  provisioner "shell" {
+    inline = [
+      "echo 'Verifying SES SMTP port is reachable...'",
+      "nc -zv -w5 email-smtp.us-east-1.amazonaws.com 587 && echo 'SMTP port reachable' || echo 'Warning: SMTP port not reachable from build instance'"
     ]
   }
 

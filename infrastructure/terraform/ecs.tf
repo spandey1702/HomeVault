@@ -44,6 +44,31 @@ resource "aws_iam_role_policy_attachment" "ecs_task_execution" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
+# Allow ECS task to pull secrets from Secrets Manager (SMTP creds, DB password)
+resource "aws_iam_role_policy" "ecs_secrets_access" {
+  name = "${var.project_name}-ecs-secrets-policy"
+  role = aws_iam_role.ecs_task_execution.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect   = "Allow"
+        Action   = ["secretsmanager:GetSecretValue"]
+        Resource = [
+          aws_secretsmanager_secret.smtp_credentials.arn,
+          aws_secretsmanager_secret.db_credentials.arn
+        ]
+      },
+      {
+        Effect   = "Allow"
+        Action   = ["kms:Decrypt"]
+        Resource = [aws_kms_key.main.arn]
+      }
+    ]
+  })
+}
+
 # ECS Task Definition
 resource "aws_ecs_task_definition" "backend" {
   family                   = "${var.project_name}-backend"
@@ -68,7 +93,7 @@ resource "aws_ecs_task_definition" "backend" {
       environment = [
         {
           name  = "DATABASE_URL"
-          value = "postgresql://${var.db_username}:${var.db_password}@${aws_db_instance.main.endpoint}/${var.db_name}"
+          value = "jdbc:postgresql://${aws_db_instance.main.endpoint}/${var.db_name}"
         },
         {
           name  = "PGUSER"
@@ -81,6 +106,34 @@ resource "aws_ecs_task_definition" "backend" {
         {
           name  = "SESSION_SECRET"
           value = var.session_secret
+        },
+        # Notification settings (reads SMTP creds from Secrets Manager at runtime)
+        {
+          name  = "NOTIFICATIONS_ENABLED"
+          value = tostring(var.notifications_enabled)
+        },
+        {
+          name  = "SMTP_HOST"
+          value = "email-smtp.${var.aws_region}.amazonaws.com"
+        },
+        {
+          name  = "SMTP_PORT"
+          value = "587"
+        },
+        {
+          name  = "NOTIFICATIONS_FROM"
+          value = "noreply@${var.domain_name != "" ? var.domain_name : "homevault.app"}"
+        }
+      ]
+
+      secrets = [
+        {
+          name      = "SMTP_USERNAME"
+          valueFrom = "${aws_secretsmanager_secret.smtp_credentials.arn}:smtp_username::"
+        },
+        {
+          name      = "SMTP_PASSWORD"
+          valueFrom = "${aws_secretsmanager_secret.smtp_credentials.arn}:smtp_password::"
         }
       ]
 

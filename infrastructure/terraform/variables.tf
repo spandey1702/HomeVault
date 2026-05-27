@@ -47,3 +47,21 @@ variable "domain_name" {
   type        = string
   default     = ""
 }
+
+variable "environment" {
+  description = "Deployment environment (dev / staging / prod)"
+  type        = string
+  default     = "prod"
+}
+
+variable "ops_email" {
+  description = "Ops email to receive SNS alarm notifications (optional)"
+  type        = string
+  default     = ""
+}
+
+variable "notifications_enabled" {
+  description = "Enable SES email notifications from the app"
+  type        = bool
+  default     = false
+}
