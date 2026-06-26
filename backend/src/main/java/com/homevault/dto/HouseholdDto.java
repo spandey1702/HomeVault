@@ -19,6 +19,7 @@ public class HouseholdDto {
     private long totalItems;
     private long expiringItems;
     private long pendingReminders;
+    private int totalMembers;
     private LocalDateTime createdAt;
 
     // ── Nested DTO ────────────────────────────────────────────────────────────
@@ -64,6 +65,9 @@ public class HouseholdDto {
 
     public long getPendingReminders() { return pendingReminders; }
     public void setPendingReminders(long pendingReminders) { this.pendingReminders = pendingReminders; }
+
+    public int getTotalMembers() { return totalMembers; }
+    public void setTotalMembers(int totalMembers) { this.totalMembers = totalMembers; }
 
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
