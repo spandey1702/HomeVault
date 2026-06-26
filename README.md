@@ -1,5 +1,7 @@
 # 🏠 HomeVault
 
+![Java CI](https://github.com/spandey1702/HomeVault/actions/workflows/test.yml/badge.svg)
+
 > **Cloud-native family inventory manager** — track items, share with your household, and get notified before things expire.
 
 Spring Boot · React · PostgreSQL · AWS ECS Fargate · Terraform · Packer · JWT · AWS SES
