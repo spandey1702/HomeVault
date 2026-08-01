@@ -1,0 +1,61 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+
+env:
+  TF_VAR_aws_region: ${{ vars.AWS_REGION }}
+  TF_VAR_environment: demo
+  TF_VAR_db_password: ${{ secrets.DB_PASSWORD }}
+  TF_VAR_session_secret: ${{ secrets.SESSION_SECRET }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: '1.10.5'
+
+      - name: Terraform init
+        working-directory: infrastructure/terraform
+        run: terraform init -input=false
+
+      # ECR repo has to exist, and have an image in it, before the ECS
+      # service tries to launch its first task — otherwise the task fails
+      # to pull `:latest` and the service never comes up.
+      - name: Create ECR repository first
+        working-directory: infrastructure/terraform
+        run: terraform apply -auto-approve -input=false -target=aws_ecr_repository.backend
+
+      - name: Get ECR repository URL
+        id: ecr
+        working-directory: infrastructure/terraform
+        run: echo "url=$(terraform output -raw ecr_repository_url)" >> "$GITHUB_OUTPUT"
+
+      - name: Log in to ECR
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build and push backend image
+        run: |
+          docker build -t "${{ steps.ecr.outputs.url }}:latest" -f backend/Dockerfile.backend .
+          docker push "${{ steps.ecr.outputs.url }}:latest"
+
+      - name: Terraform apply (full)
+        working-directory: infrastructure/terraform
+        run: terraform apply -auto-approve -input=false
+
+      - name: Show application URL
+        working-directory: infrastructure/terraform
+        run: terraform output -raw application_url

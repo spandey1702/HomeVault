@@ -32,7 +32,7 @@ Spring Boot · React · PostgreSQL · AWS ECS Fargate · Terraform · Packer · 
               ┌───────────┴────────────┐
               ▼                        ▼
         RDS PostgreSQL          Secrets Manager
-        (Multi-AZ, db subnets)  JWT secret · SMTP creds
+        (single-AZ, db subnets) JWT secret · SMTP creds
                                         │
                                   AWS SES SMTP
                                   Daily expiry +
@@ -46,7 +46,7 @@ Supporting: ECR · CloudWatch (8 alarms) · KMS · SNS · IAM · VPC (10.0.0.0/1
 VPC 10.0.0.0/16
 ├── Public  10.0.1/2.0/24   → ALB, NAT Gateways
 ├── Private 10.0.10/11.0/24 → ECS Tasks
-└── DB      10.0.20/21.0/24 → RDS Primary + Standby
+└── DB      10.0.20/21.0/24 → RDS (single-AZ)
 ```
 
 Infrastructure: **44 Terraform resources** across 2 availability zones. `terraform apply` provisions everything — zero manual console steps.
@@ -59,7 +59,7 @@ Infrastructure: **44 Terraform resources** across 2 availability zones. `terrafo
 |---|---|
 | Backend | Java 17, Spring Boot 3.2, Spring Security, JPA/Hibernate |
 | Frontend | React 18, TypeScript, Material UI v5, React Router |
-| Database | PostgreSQL 15 (AWS RDS Multi-AZ) |
+| Database | PostgreSQL 15 (AWS RDS, single-AZ) |
 | Auth | JWT (jjwt 0.12.3), BCrypt |
 | Email | Spring Mail → AWS SES SMTP |
 | Infrastructure | Terraform 1.0+, Packer (Ubuntu 22.04 AMIs) |

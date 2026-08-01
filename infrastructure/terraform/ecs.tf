@@ -53,11 +53,10 @@ resource "aws_iam_role_policy" "ecs_secrets_access" {
     Version = "2012-10-17"
     Statement = [
       {
-        Effect   = "Allow"
-        Action   = ["secretsmanager:GetSecretValue"]
+        Effect = "Allow"
+        Action = ["secretsmanager:GetSecretValue"]
         Resource = [
-          aws_secretsmanager_secret.smtp_credentials.arn,
-          aws_secretsmanager_secret.db_credentials.arn
+          aws_secretsmanager_secret.smtp_credentials.arn
         ]
       },
       {
@@ -82,7 +81,7 @@ resource "aws_ecs_task_definition" "backend" {
     {
       name  = "backend"
       image = "${aws_ecr_repository.backend.repository_url}:latest"
-      
+
       portMappings = [
         {
           containerPort = 8080
@@ -162,7 +161,7 @@ resource "aws_ecs_service" "backend" {
   launch_type     = "FARGATE"
 
   network_configuration {
-    subnets          = [aws_subnet.private_1.id, aws_subnet.private_2.id]
+    subnets          = aws_subnet.private[*].id
     security_groups  = [aws_security_group.ecs_tasks.id]
     assign_public_ip = false
   }
